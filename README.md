@@ -37,7 +37,7 @@ Before running this project, make sure you have:
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/yourusername/library-management-system.git
+   git clone https://github.com/yourusername/library-management-system.git](https://github.com/adarshraj5206/library-management-system
    cd library-management-system
    ```
 
@@ -151,8 +151,8 @@ This project is open source and available under the [MIT License](LICENSE).
 
 **Your Name**
 
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [Your Name](https://linkedin.com/in/yourprofile)
+- GitHub: [@adarshraj5206](https://github.com/adarshraj5206)
+- LinkedIn: [Adarsh Vardhan](https://www.linkedin.com/in/adarsh-vardhan-838a64293/)
 
 ## 🙏 Acknowledgments
 
