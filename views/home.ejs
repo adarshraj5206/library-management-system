@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Library Management System</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+        color: #333;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      header {
+        text-align: center;
+        color: white;
+        margin-bottom: 40px;
+        animation: fadeInDown 0.8s ease;
+      }
+
+      header h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      header p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+      }
+
+      .add-book-section {
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        animation: fadeInUp 0.8s ease;
+      }
+
+      .add-book-section h2 {
+        color: #667eea;
+        margin-bottom: 20px;
+        font-size: 1.8rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .form-group label {
+        margin-bottom: 5px;
+        color: #555;
+        font-weight: 500;
+        font-size: 0.9rem;
+      }
+
+      .form-group input {
+        padding: 12px 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        font-family: "Poppins", sans-serif;
+      }
+
+      .form-group input:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
+      .btn-add {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 14px 40px;
+        border-radius: 10px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      }
+
+      .btn-add:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+      }
+
+      .books-section {
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        animation: fadeInUp 0.8s ease 0.2s backwards;
+      }
+
+      .books-section h2 {
+        color: #667eea;
+        margin-bottom: 25px;
+        font-size: 1.8rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .books-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 25px;
+      }
+
+      .book-card {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .book-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 5px;
+        height: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+
+      .book-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .book-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .book-info {
+        margin-bottom: 15px;
+      }
+
+      .book-info-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 8px;
+        color: #555;
+        font-size: 0.95rem;
+      }
+
+      .book-info-item i {
+        color: #667eea;
+        width: 20px;
+      }
+
+      .status-badge {
+        display: inline-block;
+        padding: 6px 15px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-top: 10px;
+      }
+
+      .status-available {
+        background: #d4edda;
+        color: #155724;
+      }
+
+      .status-issued {
+        background: #fff3cd;
+        color: #856404;
+      }
+
+      .book-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        flex: 1;
+        justify-content: center;
+        min-width: 90px;
+      }
+
+      .btn-issue {
+        background: #28a745;
+        color: white;
+      }
+
+      .btn-issue:hover {
+        background: #218838;
+        transform: scale(1.05);
+      }
+
+      .btn-return {
+        background: #ffc107;
+        color: #333;
+      }
+
+      .btn-return:hover {
+        background: #e0a800;
+        transform: scale(1.05);
+      }
+
+      .btn-delete {
+        background: #dc3545;
+        color: white;
+      }
+
+      .btn-delete:hover {
+        background: #c82333;
+        transform: scale(1.05);
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: #999;
+      }
+
+      .empty-state i {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        opacity: 0.5;
+      }
+
+      .empty-state p {
+        font-size: 1.2rem;
+      }
+
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 768px) {
+        header h1 {
+          font-size: 2rem;
+        }
+
+        .books-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1><i class="fas fa-book-reader"></i> Library Management System</h1>
+        <p>Manage your book collection with ease</p>
+      </header>
+
+      <!-- Add Book Section -->
+      <div class="add-book-section">
+        <h2><i class="fas fa-plus-circle"></i> Add New Book</h2>
+        <form action="/" method="post">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="bookName"
+                ><i class="fas fa-book"></i> Book Name</label
+              >
+              <input
+                type="text"
+                id="bookName"
+                placeholder="Enter book name"
+                name="bookName"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="bookAuthor"
+                ><i class="fas fa-user-edit"></i> Author</label
+              >
+              <input
+                type="text"
+                id="bookAuthor"
+                placeholder="Enter author name"
+                name="bookAuthor"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="bookPages"
+                ><i class="fas fa-file-alt"></i> Pages</label
+              >
+              <input
+                type="number"
+                id="bookPages"
+                placeholder="Number of pages"
+                name="bookPages"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="bookPrice"
+                ><i class="fas fa-rupee-sign"></i> Price (₹)</label
+              >
+              <input
+                type="number"
+                id="bookPrice"
+                placeholder="Enter price"
+                name="bookPrice"
+                required
+              />
+            </div>
+          </div>
+          <button type="submit" class="btn-add">
+            <i class="fas fa-plus"></i> Add Book to Library
+          </button>
+        </form>
+      </div>
+
+      <!-- Books Display Section -->
+      <div class="books-section">
+        <h2>
+          <i class="fas fa-books"></i> Book Collection (<%= data.length %>)
+        </h2>
+
+        <% if (data.length === 0) { %>
+        <div class="empty-state">
+          <i class="fas fa-book-open"></i>
+          <p>No books in the library yet. Add your first book above!</p>
+        </div>
+        <% } else { %>
+        <div class="books-grid">
+          <% data.forEach(element => { %>
+          <div class="book-card">
+            <div class="book-title">
+              <i class="fas fa-book"></i>
+              <%= element.bookName %>
+            </div>
+
+            <div class="book-info">
+              <div class="book-info-item">
+                <i class="fas fa-user"></i>
+                <strong>Author:</strong> <%= element.bookAuthor %>
+              </div>
+              <div class="book-info-item">
+                <i class="fas fa-file-alt"></i>
+                <strong>Pages:</strong> <%= element.bookPages %>
+              </div>
+              <div class="book-info-item">
+                <i class="fas fa-rupee-sign"></i>
+                <strong>Price:</strong> ₹<%= element.bookPrice %>
+              </div>
+            </div>
+
+            <span
+              class="status-badge <%= element.bookState === 'Available' ? 'status-available' : 'status-issued' %>"
+            >
+              <i
+                class="fas <%= element.bookState === 'Available' ? 'fa-check-circle' : 'fa-clock' %>"
+              ></i>
+              <%= element.bookState %>
+            </span>
+
+            <div class="book-actions">
+              <% if (element.bookState === "Available") { %>
+              <form action="/issue" method="post" style="flex: 1">
+                <input
+                  type="hidden"
+                  name="bookName"
+                  value="<%= element.bookName %>"
+                />
+                <button type="submit" class="btn btn-issue">
+                  <i class="fas fa-hand-holding"></i> Issue
+                </button>
+              </form>
+              <% } %> <% if (element.bookState === "Issued") { %>
+              <form action="/return" method="post" style="flex: 1">
+                <input
+                  type="hidden"
+                  name="bookName"
+                  value="<%= element.bookName %>"
+                />
+                <button type="submit" class="btn btn-return">
+                  <i class="fas fa-undo"></i> Return
+                </button>
+              </form>
+              <% } %>
+
+              <form action="/delete" method="post" style="flex: 1">
+                <input
+                  type="hidden"
+                  name="bookName"
+                  value="<%= element.bookName %>"
+                />
+                <button type="submit" class="btn btn-delete">
+                  <i class="fas fa-trash"></i> Delete
+                </button>
+              </form>
+            </div>
+          </div>
+          <% }) %>
+        </div>
+        <% } %>
+      </div>
+    </div>
+  </body>
+</html>
